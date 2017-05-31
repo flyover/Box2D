@@ -42,7 +42,7 @@ public:
 		if (m_stack != m_array)
 		{
 			b2Free(m_stack);
-			m_stack = NULL;
+			m_stack = nullptr;
 		}
 	}
 

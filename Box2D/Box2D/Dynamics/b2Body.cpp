@@ -68,10 +68,10 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 	m_sweep.a = bd->angle;
 	m_sweep.alpha0 = 0.0f;
 
-	m_jointList = NULL;
-	m_contactList = NULL;
-	m_prev = NULL;
-	m_next = NULL;
+	m_jointList = nullptr;
+	m_contactList = nullptr;
+	m_prev = nullptr;
+	m_next = nullptr;
 
 	m_linearVelocity = bd->linearVelocity;
 	m_angularVelocity = bd->angularVelocity;
@@ -103,7 +103,7 @@ b2Body::b2Body(const b2BodyDef* bd, b2World* world)
 
 	m_userData = bd->userData;
 
-	m_fixtureList = NULL;
+	m_fixtureList = nullptr;
 	m_fixtureCount = 0;
 }
 
@@ -151,7 +151,7 @@ void b2Body::SetType(b2BodyType type)
 		ce = ce->next;
 		m_world->m_contactManager.Destroy(ce0->contact);
 	}
-	m_contactList = NULL;
+	m_contactList = nullptr;
 
 	// Touch the proxies so that new contacts will be created (when appropriate)
 	b2BroadPhase* broadPhase = &m_world->m_contactManager.m_broadPhase;
@@ -170,7 +170,7 @@ b2Fixture* b2Body::CreateFixture(const b2FixtureDef* def)
 	b2Assert(m_world->IsLocked() == false);
 	if (m_world->IsLocked() == true)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	b2BlockAllocator* allocator = &m_world->m_blockAllocator;
@@ -215,7 +215,7 @@ b2Fixture* b2Body::CreateFixture(const b2Shape* shape, float32 density)
 
 void b2Body::DestroyFixture(b2Fixture* fixture)
 {
-	if (fixture == NULL)
+	if (fixture == nullptr)
 	{
 		return;
 	}
@@ -234,7 +234,7 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 #if B2_ASSERT_ENABLED
 	bool found = false;
 #endif // B2_ASSERT_ENABLED
-	while (*node != NULL)
+	while (*node != nullptr)
 	{
 		if (*node == fixture)
 		{
@@ -277,8 +277,8 @@ void b2Body::DestroyFixture(b2Fixture* fixture)
 		fixture->DestroyProxies(broadPhase);
 	}
 
-	fixture->m_body = NULL;
-	fixture->m_next = NULL;
+	fixture->m_body = nullptr;
+	fixture->m_next = nullptr;
 	fixture->Destroy(allocator);
 	fixture->~b2Fixture();
 	allocator->Free(fixture, sizeof(b2Fixture));
@@ -509,7 +509,7 @@ void b2Body::SetActive(bool flag)
 			ce = ce->next;
 			m_world->m_contactManager.Destroy(ce0->contact);
 		}
-		m_contactList = NULL;
+		m_contactList = nullptr;
 	}
 }
 

@@ -75,7 +75,7 @@ public:
 	/// @param p a point in world coordinates.
 	/// @param distance returns the distance from the current shape.
 	/// @param normal returns the direction in which the distance increases.
-	virtual void ComputeDistance(const b2Transform& xf, const b2Vec2& p, float32* distance, b2Vec2* normal, int32 childIndex) const= 0;
+	virtual void ComputeDistance(const b2Transform& xf, const b2Vec2& p, float32* distance, b2Vec2* normal, int32 childIndex) const = 0;
 
 	/// Cast a ray against a child shape.
 	/// @param output the ray-cast results.
