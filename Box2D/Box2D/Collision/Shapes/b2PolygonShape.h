@@ -32,10 +32,10 @@ public:
 	b2PolygonShape();
 
 	/// Implement b2Shape.
-	b2Shape* Clone(b2BlockAllocator* allocator) const;
+	b2Shape* Clone(b2BlockAllocator* allocator) const override;
 
 	/// @see b2Shape::GetChildCount
-	int32 GetChildCount() const;
+	int32 GetChildCount() const override;
 
 	/// Create a convex hull from the given array of local points.
 	/// The count must be in the range [3, b2_maxPolygonVertices].
@@ -57,20 +57,20 @@ public:
 	void SetAsBox(float32 hx, float32 hy, const b2Vec2& center, float32 angle);
 
 	/// @see b2Shape::TestPoint
-	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const;
+	bool TestPoint(const b2Transform& transform, const b2Vec2& p) const override;
 
 	// @see b2Shape::ComputeDistance
 	void ComputeDistance(const b2Transform& xf, const b2Vec2& p, float32* distance, b2Vec2* normal, int32 childIndex) const;
 
 	/// Implement b2Shape.
 	bool RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-					const b2Transform& transform, int32 childIndex) const;
+					const b2Transform& transform, int32 childIndex) const override;
 
 	/// @see b2Shape::ComputeAABB
-	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const;
+	void ComputeAABB(b2AABB* aabb, const b2Transform& transform, int32 childIndex) const override;
 
 	/// @see b2Shape::ComputeMass
-	void ComputeMass(b2MassData* massData, float32 density) const;
+	void ComputeMass(b2MassData* massData, float32 density) const override;
 
 	/// Get the vertex count.
 	int32 GetVertexCount() const { return m_count; }
