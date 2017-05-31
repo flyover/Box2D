@@ -16,7 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Box2D/Common/b2Timer.h>
+#include "Box2D/Common/b2Timer.h"
 
 #if defined(_WIN32)
 
@@ -64,7 +64,7 @@ float32 b2Timer::GetMilliseconds() const
 
 #elif defined(__linux__) || defined (__APPLE__)
 
-#include <sys/time.h>
+#include "sys/time.h"
 
 b2Timer::b2Timer()
 {

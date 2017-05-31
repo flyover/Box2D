@@ -21,10 +21,10 @@
 
 #include <stdlib.h>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
-#include <Box2D/Box2D.h>
+#include "Box2D/Box2D.h"
 #include "DebugDraw.h"
 
 class Test;
