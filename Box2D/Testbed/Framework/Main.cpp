@@ -18,8 +18,8 @@
 
 #include <stdio.h>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 #include "imgui.h"
 #include "examples/opengl_example/imgui_impl_glfw.h"
@@ -33,7 +33,7 @@
 
 // This include was added to support MinGW
 #ifdef _WIN32
-#include <crtdbg.h>
+#include "crtdbg.h"
 #endif
 
 //

@@ -19,8 +19,8 @@
 #ifndef B2_BLOCK_ALLOCATOR_H
 #define B2_BLOCK_ALLOCATOR_H
 
-#include <Box2D/Common/b2Settings.h>
-#include <Box2D/Common/b2TrackedBlock.h>
+#include "Box2D/Common/b2Settings.h"
+#include "Box2D/Common/b2TrackedBlock.h"
 
 const int32 b2_chunkSize = 16 * 1024;
 const int32 b2_maxBlockSize = 640;
