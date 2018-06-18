@@ -18,11 +18,11 @@
 
 #include <stdio.h>
 
-#include "glad/glad.h"
+#include <GL/gl3w.h>    // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
 #include "GLFW/glfw3.h"
 
 #include "imgui.h"
-#include "examples/opengl_example/imgui_impl_glfw.h"
+#include "examples/opengl3_example/imgui_impl_glfw_gl3.h"
 
 #include "DebugDraw.h"
 #include "Test.h"
@@ -64,6 +64,7 @@ static void sCreateUI(GLFWwindow* window)
 	ui.showMenu = true;
 
 	// Init UI
+	ImGui::CreateContext();
 	const char* fontPath = "Data/DroidSans.ttf";
 	FILE* fontFile = fopen(fontPath, "rb");
 	if (fontFile)
@@ -73,7 +74,7 @@ static void sCreateUI(GLFWwindow* window)
 		ImGui::GetIO().Fonts->AddFontFromFileTTF(fontPath, 15.f);
 	}
 
-	if (ImGui_ImplGlfw_Init(window, false) == false)
+	if (ImGui_ImplGlfwGL3_Init(window, false) == false)
 	{
 		fprintf(stderr, "Could not init GUI renderer.\n");
 		assert(false);
@@ -97,7 +98,7 @@ static void sResizeWindow(GLFWwindow*, int width, int height)
 //
 static void sKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	ImGui_ImplGlFw_KeyCallback(window, key, scancode, action, mods);
+	ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
 	bool keys_for_ui = ImGui::GetIO().WantCaptureKeyboard;
 	if (keys_for_ui)
 		return;
@@ -446,8 +447,12 @@ int main(int, char**)
 	char title[64];
 	sprintf(title, "Box2D Testbed Version %d.%d.%d", b2_version.major, b2_version.minor, b2_version.revision);
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#if __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 
     mainWindow = glfwCreateWindow(g_camera.m_width, g_camera.m_height, title, NULL, NULL);
 	if (mainWindow == NULL)
@@ -459,7 +464,7 @@ int main(int, char**)
 
 	glfwMakeContextCurrent(mainWindow);
 
-	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	gl3wInit();
 
 	printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
 
@@ -470,8 +475,6 @@ int main(int, char**)
 	glfwSetMouseButtonCallback(mainWindow, sMouseButton);
 	glfwSetCursorPosCallback(mainWindow, sMouseMotion);
 	glfwSetScrollCallback(mainWindow, sScrollCallback);
-
-	g_debugDraw.Create();
 
 	sCreateUI(mainWindow);
 
@@ -502,7 +505,7 @@ int main(int, char**)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		ImGui_ImplGlfw_NewFrame();
+		ImGui_ImplGlfwGL3_NewFrame();
 		ImGui::SetNextWindowPos(ImVec2(0,0));
 		ImGui::SetNextWindowSize(ImVec2((float)g_camera.m_width, (float)g_camera.m_height));
 		ImGui::Begin("Overlay", NULL, ImVec2(0,0), 0.0f, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoInputs|ImGuiWindowFlags_AlwaysAutoResize|ImGuiWindowFlags_NoScrollbar);
@@ -520,7 +523,7 @@ int main(int, char**)
         time1 = time2;
 
 		ImGui::Render();
-
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 		glfwSwapBuffers(mainWindow);
 
 		glfwPollEvents();
@@ -532,13 +535,11 @@ int main(int, char**)
 		test = NULL;
 	}
 
-	g_debugDraw.Destroy();
-	ImGui_ImplGlfw_Shutdown();
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
 	glfwMakeContextCurrent(NULL);
 	glfwDestroyWindow(mainWindow); mainWindow = NULL;
 	glfwTerminate();
 
 	return 0;
 }
-
-#include "examples/opengl_example/imgui_impl_glfw.cpp"

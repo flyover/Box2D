@@ -42,8 +42,8 @@ project 'Testbed'
 	kind 'ConsoleApp'
 	debugdir 'Testbed'
 	warnings 'Default'
-	includedirs { '.', 'Testbed/glfw/deps', 'Testbed/imgui' }
-
+	includedirs { '.', 'Testbed/imgui', 'Testbed/imgui/examples/libs/gl3w' }
+	defines { 'ImDrawIdx=unsigned int' }
 	files
 	{
 		'Testbed/Framework/*',
@@ -58,6 +58,8 @@ project 'Testbed'
 		'Testbed/glfw/src/monitor.c',
 		'Testbed/glfw/src/vulkan.c',
 		'Testbed/glfw/src/window.c',
+		'Testbed/imgui/examples/libs/gl3w/GL/gl3w.c',
+		'Testbed/imgui/examples/opengl3_example/imgui_impl_glfw_gl3.cpp',
 		'Testbed/imgui/*'
 	}
 
@@ -65,7 +67,6 @@ project 'Testbed'
 		defines { '_GLFW_WIN32' }
 		files
 		{ 
-			'Testbed/glfw/deps/*',
 			'Testbed/glfw/src/win32_platform.h',
 			'Testbed/glfw/src/win32_joystick.h',
 			'Testbed/glfw/src/wgl_context.h',
@@ -114,7 +115,6 @@ project 'Testbed'
 		defines { '_GLFW_X11' }
 		files
 		{
-			'Testbed/glfw/deps/*',
 			'Testbed/glfw/src/x11_platform.h',
 			'Testbed/glfw/src/xkb_unicode.h',
 			'Testbed/glfw/src/linux_joystick.h',
